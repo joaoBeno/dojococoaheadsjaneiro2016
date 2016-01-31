@@ -42,6 +42,7 @@
 		391327CA1C5CDB7B00B3E59A /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		7C0FC5EEAFD2CB4F1C28E052 /* libPods-dojosabado.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-dojosabado.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A171FB800378466FE30AA1D1 /* Pods-dojosabado.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dojosabado.release.xcconfig"; path = "Pods/Target Support Files/Pods-dojosabado/Pods-dojosabado.release.xcconfig"; sourceTree = "<group>"; };
+		CF416C611C5DF2E5007A54B3 /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 		391327AB1C5CD7C500B3E59A /* dojosabado */ = {
 			isa = PBXGroup;
 			children = (
+				CF416C611C5DF2E5007A54B3 /* constants.h */,
 				391327B81C5CD7C500B3E59A /* Main.storyboard */,
 				391327C61C5CDA9700B3E59A /* PersonTableViewController.h */,
 				391327C71C5CDA9700B3E59A /* PersonTableViewController.m */,
@@ -143,6 +145,7 @@
 				391327A61C5CD7C500B3E59A /* Frameworks */,
 				391327A71C5CD7C500B3E59A /* Resources */,
 				784DECCD37F8C08F4F6FF3C9 /* Copy Pods Resources */,
+				5DFEB5E869D2DB3292E0CAE7 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,6 +202,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5DFEB5E869D2DB3292E0CAE7 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-dojosabado/Pods-dojosabado-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		784DECCD37F8C08F4F6FF3C9 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

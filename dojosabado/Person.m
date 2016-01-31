@@ -7,12 +7,8 @@
 //
 
 #import "Person.h"
+#import "constants.h"
 #import <AFNetworking.h>
-
-#define URL_PERSON @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person?apiKey=B70RhtlkqR3tFQBID9--QH8oxLcVMVNy"
-//#define URL_PERSON_SORT @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person?s={'Nome':1}&apiKey=B70RhtlkqR3tFQBID9--QH8oxLcVMVNy"
-
-#define URL_PERSON_SORT @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person"
 
 @implementation Person
 
@@ -31,10 +27,10 @@
 +(void)getPersons:(HandlerSucesso)sucesso falha:(HandlerFalha)falha progresso:(HandlerProgresso)progresso{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager GET:URL_PERSON_SORT
+    [manager GET:[[NSURL URLWithString:@"Person" relativeToURL:[NSURL URLWithString:BASE_URL]] absoluteString]
       parameters: [NSDictionary dictionaryWithObjectsAndKeys:
                    @"{'Nome':1}",@"s",
-                   @"B70RhtlkqR3tFQBID9--QH8oxLcVMVNy",@"apiKey", nil]
+                   API_KEY,@"apiKey", nil]
         progress:^(NSProgress * _Nonnull downloadProgress) {
             progresso(downloadProgress.fractionCompleted);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -62,8 +58,14 @@
     
     NSDictionary *dicionario = [person toDictionary];
     
+    NSMutableString *url = [NSMutableString stringWithString:@"Person"];
+    [url appendString:@"?apiKey="];
+    [url appendString:API_KEY];
     
-    [manager POST:URL_PERSON parameters:dicionario progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[[NSURL URLWithString: url
+                          relativeToURL:[NSURL URLWithString:BASE_URL]] absoluteString]
+       parameters:[NSDictionary dictionaryWithDictionary:dicionario]
+         progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         sucesso(task, responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -76,15 +78,15 @@
 +(void)deletePerson:(Person *)person sucesso:(HandlerSucesso)sucesso falha:(HandlerFalha)falha{
     
     
-    NSString *url = @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person/";
-    NSString *apiKey = @"?apiKey=B70RhtlkqR3tFQBID9--QH8oxLcVMVNy";
-    
-    NSString *finalUrl = [url stringByAppendingString:person.Id.Id];
-    finalUrl = [finalUrl stringByAppendingString:apiKey];
+    NSURL *url = [NSURL URLWithString:@"Person/" relativeToURL:[NSURL URLWithString:BASE_URL]];
+    NSURL *finalUrl = [NSURL URLWithString:person.Id.Id relativeToURL:url];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager DELETE:finalUrl parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager DELETE:[finalUrl absoluteString]
+         parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                     API_KEY,@"apiKey", nil]
+            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@", responseObject);
         sucesso(task, responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

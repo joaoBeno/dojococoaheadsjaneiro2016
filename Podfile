@@ -5,5 +5,6 @@ target 'dojosabado' do
 pod 'AFNetworking'
 pod 'JSONModel'
 pod 'MBProgressHUD'
+pod 'AFNetworkActivityLogger', :git => 'https://github.com/AFNetworking/AFNetworkActivityLogger.git', :branch => '3_0_0'
 end
 
