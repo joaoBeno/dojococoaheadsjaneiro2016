@@ -10,7 +10,9 @@
 #import <AFNetworking.h>
 
 #define URL_PERSON @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person?apiKey=B70RhtlkqR3tFQBID9--QH8oxLcVMVNy"
-#define URL_PERSON_SORT @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person?s={'Nome':1}&apiKey=B70RhtlkqR3tFQBID9--QH8oxLcVMVNy"
+//#define URL_PERSON_SORT @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person?s={'Nome':1}&apiKey=B70RhtlkqR3tFQBID9--QH8oxLcVMVNy"
+
+#define URL_PERSON_SORT @"https://api.mongolab.com/api/1/databases/dojococoaheads/collections/Person"
 
 @implementation Person
 
@@ -29,12 +31,10 @@
 +(void)getPersons:(HandlerSucesso)sucesso falha:(HandlerFalha)falha progresso:(HandlerProgresso)progresso{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    NSCharacterSet *all = [NSCharacterSet URLQueryAllowedCharacterSet];
-    NSString *finalUrl = [URL_PERSON_SORT stringByAddingPercentEncodingWithAllowedCharacters:all];
-    
-    
-    [manager GET:finalUrl
-      parameters:nil
+    [manager GET:URL_PERSON_SORT
+      parameters: [NSDictionary dictionaryWithObjectsAndKeys:
+                   @"{'Nome':1}",@"s",
+                   @"B70RhtlkqR3tFQBID9--QH8oxLcVMVNy",@"apiKey", nil]
         progress:^(NSProgress * _Nonnull downloadProgress) {
             progresso(downloadProgress.fractionCompleted);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -92,6 +92,10 @@
         falha(task, error);
     }];
 
+}
+
++(void)updatePerson:(Person *)person sucesso:(HandlerSucesso)sucesso falha:(HandlerFalha)falha {
+    
 }
 
 
